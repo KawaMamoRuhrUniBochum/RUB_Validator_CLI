@@ -3,7 +3,6 @@ package org.example;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
-import ca.uhn.fhir.validation.SingleValidationMessage;
 import ca.uhn.fhir.validation.ValidationResult;
 import org.example.context.FhirCtx;
 import org.example.pdf.PdfGenerator;
@@ -15,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 
 public class Main {
     static void main(String[] args) {
@@ -22,6 +22,10 @@ public class Main {
         FhirContext fhirContext = FhirCtx.getFhirContext();
         IParser iParser = fhirContext.newJsonParser();
         Validator validator = new Validator(fhirContext);
+        if(args.length>1){
+            validator.setTerminologyServerUrl(args[1]);
+        }else
+            validator.setTerminologyServerUrl("https://tx.fhir.org/r4");
         validator.init();
         try {
             IBaseResource iBaseResource = iParser.parseResource(Files.newInputStream(Path.of(args[0])));
@@ -34,7 +38,9 @@ public class Main {
             PdfGenerator pdfGenerator = new PdfGenerator();
             byte[] generateReport = pdfGenerator.generateReport(report);
 
-            try (FileOutputStream fileOutputStream = new FileOutputStream("report.pdf")) {
+
+
+            try (FileOutputStream fileOutputStream = new FileOutputStream(LocalDateTime.now() +"_Bericht.pdf")) {
                 fileOutputStream.write(generateReport);
             }
 

@@ -10,14 +10,18 @@ import jakarta.annotation.PostConstruct;
 import org.hl7.fhir.common.hapi.validation.support.*;
 import org.hl7.fhir.common.hapi.validation.validator.FhirInstanceValidator;
 import org.hl7.fhir.instance.model.api.IBaseResource;
+import org.hl7.fhir.r4.model.CodeSystem;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Validator {
 
     private FhirValidator fhirValidator;
     private final FhirContext fhirContext;
     private ValidationSupportChain validationSupportChain;
+    private String terminologyServerUrl;
 
     public Validator(FhirContext fhirContext) {
         this.fhirContext = fhirContext;
@@ -50,7 +54,7 @@ public class Validator {
 
     private ValidationSupportChain getSupportChain(NpmPackageValidationSupport npmSupport, PrePopulatedValidationSupport populatedValidationSupport) {
         RemoteTerminologyServiceValidationSupport remoteTerminologyServiceValidationSupport = new RemoteTerminologyServiceValidationSupport(fhirContext);
-        remoteTerminologyServiceValidationSupport.setBaseUrl("https://tx.fhir.org/r4");
+        remoteTerminologyServiceValidationSupport.setBaseUrl(terminologyServerUrl);
         validationSupportChain = new ValidationSupportChain(
                 npmSupport,
                 populatedValidationSupport,
@@ -74,4 +78,11 @@ public class Validator {
         return validationSupportChain;
     }
 
+    public String getTerminologyServerUrl() {
+        return terminologyServerUrl;
+    }
+
+    public void setTerminologyServerUrl(String terminologyServerUrl) {
+        this.terminologyServerUrl = terminologyServerUrl;
+    }
 }
