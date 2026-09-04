@@ -10,11 +10,8 @@ import jakarta.annotation.PostConstruct;
 import org.hl7.fhir.common.hapi.validation.support.*;
 import org.hl7.fhir.common.hapi.validation.validator.FhirInstanceValidator;
 import org.hl7.fhir.instance.model.api.IBaseResource;
-import org.hl7.fhir.r4.model.CodeSystem;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Validator {
 

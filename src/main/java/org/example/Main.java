@@ -14,7 +14,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 public class Main {
     static void main(String[] args) {
@@ -38,9 +39,9 @@ public class Main {
             PdfGenerator pdfGenerator = new PdfGenerator();
             byte[] generateReport = pdfGenerator.generateReport(report);
 
-
-
-            try (FileOutputStream fileOutputStream = new FileOutputStream(LocalDateTime.now() +"_Bericht.pdf")) {
+            int lastIndexOfDot = args[0].lastIndexOf(".");
+            String fileName = args[0].substring(0, lastIndexOfDot);
+            try (FileOutputStream fileOutputStream = new FileOutputStream(fileName+"_"+LocalDate.now() +"_Bericht.pdf")) {
                 fileOutputStream.write(generateReport);
             }
 
