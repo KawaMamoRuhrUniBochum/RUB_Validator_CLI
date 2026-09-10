@@ -64,11 +64,7 @@ public class Validator {
     }
 
     public ValidationResult validate(IBaseResource resource){
-        ValidationResult validationResult = fhirValidator.validateWithResult(resource);
-        List<SingleValidationMessage> collect = validationResult.getMessages().stream()
-                .filter(msg -> !msg.getMessage().contains("http://hl7.org/fhir/5.0")).
-                toList();
-        return new ValidationResult(fhirContext, collect);
+        return fhirValidator.validateWithResult(resource);
     }
 
     public IValidationSupport getValidationSupportChain() {
