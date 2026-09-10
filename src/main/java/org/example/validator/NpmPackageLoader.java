@@ -1,7 +1,8 @@
 package org.example.validator;
 
 import org.hl7.fhir.common.hapi.validation.support.NpmPackageValidationSupport;
-import org.hl7.fhir.r4.model.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,6 +12,9 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public class NpmPackageLoader {
+
+    private static final Logger log = LoggerFactory.getLogger(NpmPackageLoader.class);
+
     public void loadAllTgzPackagesFromClasspath(NpmPackageValidationSupport npmSupport) {
 
         try {
@@ -27,6 +31,7 @@ public class NpmPackageLoader {
                 try {
                     String fileName = file.getFileName().toString();
                     int lastIndex = fileName.lastIndexOf(".");
+                    log.atInfo().log(fileName+" loaded to the Validator");
 
                     String extension;
                     if(lastIndex != -1)

@@ -2,7 +2,6 @@ package org.example.parser;
 
 import ca.uhn.fhir.parser.IParser;
 import org.example.context.FhirCtx;
-import org.example.validator.ResourceStatistics;
 import org.example.validator.Validator;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.r4.model.Bundle;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
 
 public class Parser {
 
